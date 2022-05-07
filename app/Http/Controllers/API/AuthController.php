@@ -136,6 +136,8 @@ class AuthController extends Controller
         auth()->user()->password = Hash::make($request->password);
         auth()->user()->save();
 
-        return response(['message' => 'Password berhasil diganti !'], 200);
+        return response([
+            'message' => 'Password berhasil diganti !'
+        ], 200);
     }
 }

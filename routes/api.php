@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\{AuthController, SettingController};
+use App\Http\Controllers\Api\{AuthController, SettingController, TeacherController};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => 'auth:sanctum'], function(){
     
     Route::group(['middleware'=>'role:admin'], function () {
+        Route::apiResource('/teacher', TeacherController::class);
+
         Route::patch('/setting', [SettingController::class, 'update']);
     });
 

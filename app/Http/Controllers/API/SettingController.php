@@ -49,7 +49,7 @@ class SettingController extends Controller
         $setting->app_name = $request->app_name;
 
         if ($setting->save()) {
-            $setting->logo = url($setting->logo);
+            $setting->logo = $setting->logo ? url($setting->logo) : $setting->logo;
             return response(['data' => $setting], 200);
         }
     }
