@@ -18,7 +18,7 @@ class User extends Authenticatable
      * @var string[]
      */
     protected $fillable = [
-        'avatar',
+        'profile_picture',
         'role',
         'name',
         'email',
@@ -26,7 +26,7 @@ class User extends Authenticatable
     ];
 
     protected $appends = [
-        'avatar_url'
+        'profile_picture_url'
     ];
 
     /**
@@ -48,12 +48,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function getAvatarUrlAttribute()
+    public function getProfilePictureUrlAttribute()
     {
-        if ($this->avatar != NULL) {
-            return url($this->avatar);
+        if ($this->profile_picture != NULL) {
+            return url($this->profile_picture);
         } else {
-            return url('/assets/images/default-avatar.png');
+            return url('/assets/images/default-profile-picture.png');
         }
     }
 }

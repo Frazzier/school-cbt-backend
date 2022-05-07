@@ -85,7 +85,7 @@ class AuthController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . auth()->user()->id,
-            'avatar' => 'mimes:png,jpg,jpeg|max:2048',
+            'profile_picture' => 'mimes:png,jpg,jpeg|max:2048',
         ], [
             'name.required' => 'Nama tidak boleh kosong !',
             'name.string' => 'Format nama tidak valid !',
@@ -93,24 +93,24 @@ class AuthController extends Controller
             'email.required' => 'Email tidak boleh kosong !',
             'email.email' => 'Email tidak valid !',
             'email.unique' => 'Email sudah dipakai !',
-            'avatar.mimes' => 'Format gambar yang diizinkan hanya PNG, JPG, JPEG',
-            'avatar.max' => 'Max ukuran gambar adalah 2 MB',
+            'profile_picture.mimes' => 'Format gambar yang diizinkan hanya PNG, JPG, JPEG',
+            'profile_picture.max' => 'Max ukuran gambar adalah 2 MB',
         ]);
 
-        if ($request->hasFile('avatar')) {
-            $upload_dir = '/uploads/images/avatar/';
+        if ($request->hasFile('profile_picture')) {
+            $upload_dir = '/uploads/images/profile-picture/';
 
-            $avatar = $request->file('avatar');
-            $name = time() . $avatar->getClientOriginalExtension();
-            $avatar->move(public_path() . $upload_dir, $name);
+            $profile_picture = $request->file('profile_picture');
+            $name = time() . $profile_picture->getClientOriginalExtension();
+            $profile_picture->move(public_path() . $upload_dir, $name);
 
-            $file_path = public_path(auth()->user()->avatar);
+            $file_path = public_path(auth()->user()->profile_picture);
 
             if (File::exists($file_path)) {
                 File::delete($file_path);
             }
 
-            auth()->user()->avatar = $upload_dir . $name;
+            auth()->user()->profile_picture = $upload_dir . $name;
         }
 
         auth()->user()->name = $request->name;
