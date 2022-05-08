@@ -16,7 +16,7 @@ class Department extends Model
 
     protected $appends = ['class_count'];
 
-    public function classes_()
+    public function classes()
     {
         return $this->hasMany(Class_::class);
     }
