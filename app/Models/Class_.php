@@ -16,6 +16,8 @@ class Class_ extends Model
         'name',
     ];
 
+    protected $with = ['department'];
+
     public function department()
     {
         return $this->belongsTo(Department::class);
