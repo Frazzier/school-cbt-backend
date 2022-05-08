@@ -383,6 +383,19 @@ class UsersTableSeeder extends Seeder
                 'created_at' => '2022-05-07 18:31:31',
                 'updated_at' => '2022-05-07 18:31:31',
             ),
+            28 => 
+            array (
+                'id' => 29,
+                'name' => 'student 1',
+                'email' => 'student1@email.com',
+                'role' => 'student',
+                'profile_picture' => '/assets/images/default-profile-picture.png',
+                'email_verified_at' => NULL,
+                'password' => '$2y$10$Y/RLXzB8Hcqg3GNUMWNxguNVrXuQsvYE/r9lbbJGJDT1JoM646Wke',
+                'remember_token' => NULL,
+                'created_at' => '2022-05-08 11:15:10',
+                'updated_at' => '2022-05-08 11:15:10',
+            ),
         ));
         
         
