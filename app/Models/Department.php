@@ -13,4 +13,16 @@ class Department extends Model
         'name',
         'abbreviation',
     ];
+
+    protected $appends = ['class_count'];
+
+    public function classes_()
+    {
+        return $this->hasMany(Class_::class);
+    }
+
+    public function getClassCountAttribute()
+    {
+        return $this->hasMany(Class_::class)->count();
+    }
 }

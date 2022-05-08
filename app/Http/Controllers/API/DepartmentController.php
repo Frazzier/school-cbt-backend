@@ -47,9 +47,12 @@ class DepartmentController extends Controller
     
     public function show(Department $department)
     {
-        //
+        return response([
+            'department' => $department,
+            'message' => 'Berhasil mengambil data !',
+        ]);
     }
-    
+
     public function update(Request $request, Department $department)
     {
         $request->validate([

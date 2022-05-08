@@ -19,7 +19,7 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     
     Route::group(['middleware'=>'role:admin'], function () {
         Route::apiResource('/teacher', TeacherController::class);
-        Route::apiResource('/department', DepartmentController::class)->except('show');
+        Route::apiResource('/department', DepartmentController::class);
 
         Route::patch('/setting', [SettingController::class, 'update']);
     });
