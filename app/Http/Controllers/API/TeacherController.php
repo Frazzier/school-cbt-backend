@@ -8,11 +8,6 @@ use Illuminate\Http\Request;
 
 class TeacherController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request)
     {
         $teachers = Teacher::with(['user' => function($q){
@@ -41,13 +36,7 @@ class TeacherController extends Controller
             'message' => 'Berhasil mengambil data !',
         ], 200);
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    
     public function store(Request $request)
     {
         $request->validate([
@@ -80,13 +69,7 @@ class TeacherController extends Controller
             'message' => 'Berhasi menyimpan data !',
         ]);
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Teacher  $teacher
-     * @return \Illuminate\Http\Response
-     */
+    
     public function show(Teacher $teacher)
     {
         return response([
@@ -94,14 +77,7 @@ class TeacherController extends Controller
             'message' => 'Berhasil mengambil data !',
         ], 200);
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Teacher  $teacher
-     * @return \Illuminate\Http\Response
-     */
+    
     public function update(Request $request, Teacher $teacher)
     {
         $request->validate([
@@ -125,13 +101,7 @@ class TeacherController extends Controller
             'message' => 'Berhasil menyimpan data !',
         ], 200);
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Teacher  $teacher
-     * @return \Illuminate\Http\Response
-     */
+    
     public function destroy(Teacher $teacher)
     {
         $teacher->user->delete();
