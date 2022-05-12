@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\{AuthController, ClassController, DepartmentController, SettingController, StudentController, TeacherController};
+use App\Http\Controllers\API\{AuthController, ClassController, DepartmentController, SettingController, StudentController, TeacherController};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
