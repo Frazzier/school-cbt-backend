@@ -104,10 +104,12 @@ class AuthController extends Controller
             $name = time() . $profile_picture->getClientOriginalExtension();
             $profile_picture->move(public_path() . $upload_dir, $name);
 
-            $file_path = public_path(auth()->user()->profile_picture);
-
-            if (File::exists($file_path)) {
-                File::delete($file_path);
+            if(auth()->user()->profile_picture != '/assets/images/default-profile-picture.png'){
+                $file_path = public_path(auth()->user()->profile_picture);
+    
+                if (File::exists($file_path)) {
+                    File::delete($file_path);
+                }
             }
 
             auth()->user()->profile_picture = $upload_dir . $name;

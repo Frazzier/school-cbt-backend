@@ -10,7 +10,7 @@ class DepartmentController extends Controller
 {
     public function index()
     {
-        $departments = Department::get();
+        $departments = Department::orderBy('name')->get();
 
         return response([
             'departments' => $departments,
@@ -35,8 +35,8 @@ class DepartmentController extends Controller
         ]);
 
         $department = Department::create([
-            'name' => strtolower($request->name),
-            'abbreviation' => strtolower($request->abbreviation),
+            'name' => ucwords($request->name),
+            'abbreviation' => strtoupper($request->abbreviation),
         ]);
 
         return response([
@@ -69,8 +69,8 @@ class DepartmentController extends Controller
             'abbreviation.unique' => 'Singkatan jurusan sudah ada !',
         ]);
 
-        $department->name = strtolower($request->name);
-        $department->abbreviation = strtolower($request->abbreviation);
+        $department->name = ucwords($request->name);
+        $department->abbreviation = strtoupper($request->abbreviation);
         $department->save();
 
         return response([

@@ -22,8 +22,8 @@ class DepartmentsTableSeeder extends Seeder
             0 => 
             array (
                 'id' => 1,
-                'name' => 'multimedia',
-                'abbreviation' => 'mm',
+                'name' => 'Multimedia',
+                'abbreviation' => 'MM',
                 'created_at' => '2022-05-08 10:02:47',
                 'updated_at' => '2022-05-08 10:02:47',
             ),
