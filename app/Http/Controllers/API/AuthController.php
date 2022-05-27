@@ -142,4 +142,22 @@ class AuthController extends Controller
             'message' => 'Password berhasil diganti !'
         ], 200);
     }
+
+    public function resetPassword(Request $request)
+    {
+        $request->validate([
+            'user_id' => 'required|exists:users,id'
+        ],[
+            'user_id.required' => 'Pilih akun pengguna !',
+            'user_id.exists' => 'Pengguna tidak ditemukan !'
+        ]);
+
+        $user = User::find($request->user_id);
+
+        $user->password = bcrypt('password');
+
+        return response([
+            'message' => 'Password berhasil direset !',
+        ]);
+    }
 }

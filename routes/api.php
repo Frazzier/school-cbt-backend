@@ -23,6 +23,7 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
         Route::apiResource('/class', ClassController::class);
         Route::apiResource('/student', StudentController::class);
 
+        Route::post('/reset-password', [AuthController::class, 'resetPassword']);
         Route::patch('/setting', [SettingController::class, 'update']);
     });
 
