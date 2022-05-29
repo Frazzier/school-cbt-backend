@@ -26,4 +26,12 @@ class Student extends Model
     {
         return $this->belongsTo(Class_::class, 'class_id');
     }
+
+    public static function boot() {
+        parent::boot();
+
+        static::deleting(function($student) {
+             $student->user->delete();
+        });
+    }
 }

@@ -25,4 +25,14 @@ class Department extends Model
     {
         return $this->hasMany(Class_::class)->count();
     }
+    
+    public static function boot() {
+        parent::boot();
+
+        static::deleting(function($department) {
+            foreach ($department->classes as $class) {
+                $class->delete();
+            }
+        });
+    }
 }

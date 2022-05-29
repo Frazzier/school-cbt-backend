@@ -10,7 +10,7 @@ class ClassController extends Controller
 {
     public function index(Request $request)
     {
-        $classes = Class_::orderBy('degree');
+        $classes = Class_::with('homeroom_teacher.user')->orderBy('department_id')->orderBy('name')->orderBy('name');
 
         if($request->keyword){
             $classes = $classes->whereHas('department', function($q) use($request){
@@ -55,6 +55,21 @@ class ClassController extends Controller
             'name.max' => 'Nama kelas maksimal 15 karakter !',
         ]);
 
+        $isClassExists = Class_::where([
+            ['department_id', $request->department_id],
+            ['degree', $request->degree],
+            ['name', strtolower($request->name)],
+        ])->first();
+
+        if($isClassExists){
+            return response([
+                "message" => "The given data was invalid.",
+                "errors" => [
+                    "kelas" => ["Kelas sudah ada !"]
+                ]
+            ], 422);
+        }
+
         $class = Class_::create([
             'department_id' => $request->department_id,
             'homeroom_teacher_id' => $request->homeroom_teacher_id,
@@ -63,7 +78,7 @@ class ClassController extends Controller
         ]);
         
         return response([
-            'class' => $class,
+            'class' => Class_::with('homeroom_teacher.user')->find($class->id),
             'message' => 'Berhasil menyimpan data !',
         ]);
     }
@@ -102,7 +117,7 @@ class ClassController extends Controller
             $class->save();
         
         return response([
-            'class' => $class,
+            'class' => Class_::with('homeroom_teacher.user')->find($class->id),
             'message' => 'Berhasil menyimpan data !',
         ]);
     }

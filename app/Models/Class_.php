@@ -18,6 +18,8 @@ class Class_ extends Model
 
     protected $with = ['department'];
 
+    protected $appends = ['student_count'];
+
     public function department()
     {
         return $this->belongsTo(Department::class);
@@ -26,5 +28,25 @@ class Class_ extends Model
     public function homeroom_teacher()
     {
         return $this->belongsTo(Teacher::class, 'homeroom_teacher_id');
+    }
+
+    public function students()
+    {
+        return $this->hasMany(Student::class, 'class_id');
+    }
+
+    public function getStudentCountAttribute()
+    {
+        return Student::where('class_id', $this->id)->count();
+    }
+    
+    public static function boot() {
+        parent::boot();
+
+        static::deleting(function($class) {
+            foreach ($class->students as $student) {
+                $student->delete();
+            }
+        });
     }
 }
