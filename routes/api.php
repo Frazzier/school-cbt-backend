@@ -27,6 +27,10 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
         Route::patch('/setting', [SettingController::class, 'update']);
     });
 
+    Route::group(['middleware'=>'role:admin&teacher'], function () {
+        Route::post('/student/test-permission/{student}', [StudentController::class, 'changeTestPermission']);
+    });
+
     Route::patch('/profile', [AuthController::class, 'updateProfile']);
     Route::patch('/change-password', [AuthController::class, 'changePassword']);
     Route::post('/logout', [AuthController::class, 'logout']);

@@ -10,7 +10,7 @@ class ClassController extends Controller
 {
     public function index(Request $request)
     {
-        $classes = Class_::with('homeroom_teacher.user')->orderBy('department_id')->orderBy('name')->orderBy('name');
+        $classes = Class_::orderBy('department_id')->orderBy('degree')->orderBy('name');
 
         if($request->keyword){
             $classes = $classes->whereHas('department', function($q) use($request){
@@ -40,7 +40,7 @@ class ClassController extends Controller
     {
         $request->validate([
             'department_id' => 'required|exists:departments,id',
-            'homeroom_teacher_id' => 'required|exists:teachers,id',
+            'homeroom_teacher_id' => 'required|exists:teachers,id|unique:class_,homeroom_teacher_id',
             'degree' => 'required|in:x,xi,xii',
             'name' => 'required|string|max:15',
         ],[
@@ -48,6 +48,7 @@ class ClassController extends Controller
             'department_id.exists' => 'Jurusan tidak ditemukan !',
             'homeroom_teacher_id.required' => 'Pilih wali kelas !',
             'homeroom_teacher_id.exists' => 'Wali kelas tidak ditemukan !',
+            'homeroom_teacher_id.unique' => 'Guru sudah menjadi wali kelas lain !',
             'degree.required' => 'Pilih tingkat kelas !',
             'degree.in' => 'Tingkat kelas tidak valid !',
             'name.required' => 'Masukan nama kelas !',
@@ -78,7 +79,7 @@ class ClassController extends Controller
         ]);
         
         return response([
-            'class' => Class_::with('homeroom_teacher.user')->find($class->id),
+            'class' => Class_::find($class->id),
             'message' => 'Berhasil menyimpan data !',
         ]);
     }
@@ -95,7 +96,7 @@ class ClassController extends Controller
     {
         $request->validate([
             'department_id' => 'required|exists:departments,id',
-            'homeroom_teacher_id' => 'required|exists:teachers,id',
+            'homeroom_teacher_id' => 'required|exists:teachers,id|unique:class_,homeroom_teacher_id,'.$class->id,
             'degree' => 'required|in:x,xi,xii',
             'name' => 'required|string|max:15',
         ],[
@@ -103,6 +104,7 @@ class ClassController extends Controller
             'department_id.exists' => 'Jurusan tidak ditemukan !',
             'homeroom_teacher_id.required' => 'Pilih wali kelas !',
             'homeroom_teacher_id.exists' => 'Wali kelas tidak ditemukan !',
+            'homeroom_teacher_id.unique' => 'Guru sudah menjadi wali kelas lain !',
             'degree.required' => 'Pilih tingkat kelas !',
             'degree.in' => 'Tingkat kelas tidak valid !',
             'name.required' => 'Masukan nama kelas !',
@@ -111,13 +113,13 @@ class ClassController extends Controller
         ]);
 
             $class->department_id = $request->department_id;
-            $class->homeroom_teacher_id = $request->homeroom_teacher_id;
+            $class->homeroom_teacher_id = intVal($request->homeroom_teacher_id);
             $class->degree = $request->degree;
             $class->name = strtolower($request->name);
             $class->save();
         
         return response([
-            'class' => Class_::with('homeroom_teacher.user')->find($class->id),
+            'class' => Class_::find($class->id),
             'message' => 'Berhasil menyimpan data !',
         ]);
     }

@@ -16,7 +16,7 @@ class Class_ extends Model
         'name',
     ];
 
-    protected $with = ['department'];
+    protected $with = ['department','homeroom_teacher'];
 
     protected $appends = ['student_count'];
 

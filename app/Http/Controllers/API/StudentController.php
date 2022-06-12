@@ -21,6 +21,10 @@ class StudentController extends Controller
             });
         }
 
+        if($request->class){
+            $students = $students->where('class_id', $request->class);
+        }
+
         if($request->limit){
             if($request->limit == -1){
                 $students = ['data' => $students->get()];
@@ -119,6 +123,21 @@ class StudentController extends Controller
 
         return response([
             'message' => 'Berhasil menghapus data !',
+        ], 200);
+    }
+
+    public function changeTestPermission(Student $student)
+    {
+        if($student->test_permission == 'prohibited'){
+            $student->test_permission = 'allowed';
+        }else{
+            $student->test_permission = 'prohibited';
+        }
+        $student->save();
+
+        return response([
+            'message' => 'Berhasil mengganti izin ujian siswa !',
+            'student' => $student
         ], 200);
     }
 }
