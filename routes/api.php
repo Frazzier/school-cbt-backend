@@ -20,8 +20,8 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     Route::group(['middleware'=>'role:admin'], function () {
         Route::apiResource('/teacher', TeacherController::class);
         Route::apiResource('/department', DepartmentController::class);
-        Route::apiResource('/class', ClassController::class);
-        Route::apiResource('/student', StudentController::class);
+        Route::apiResource('/class', ClassController::class)->except('show');
+        Route::apiResource('/student', StudentController::class)->except('index','show');
 
         Route::post('/reset-password', [AuthController::class, 'resetPassword']);
         Route::patch('/setting', [SettingController::class, 'update']);
@@ -29,6 +29,14 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
 
     Route::group(['middleware'=>'role:admin&teacher'], function () {
         Route::post('/student/test-permission/{student}', [StudentController::class, 'changeTestPermission']);
+
+        Route::get('/class/{class}', [ClassController::class, 'show']);
+
+        Route::apiResource('/student', StudentController::class)->only('index','show');
+    });
+
+    Route::group(['middleware'=>'role:teacher'], function () {
+        Route::get('/teacher/homeroom/class-id', [TeacherController::class, 'homeroomClassId']);
     });
 
     Route::patch('/profile', [AuthController::class, 'updateProfile']);

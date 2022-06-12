@@ -86,9 +86,15 @@ class ClassController extends Controller
 
     public function show(Class_ $class)
     {
+        if(auth()->user()->role == 'teacher' && $class->homeroom_teacher_id != auth()->user()->teacher->id){
+            return response([
+                'message' => 'Data kelas tidak ditemukan !',
+            ], 404);
+        }
+
         return response([
-            'class' => $class,
             'message' => 'Berhasil mengambil data !',
+            'class' => $class,
         ]);
     }
     

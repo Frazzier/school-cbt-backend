@@ -110,4 +110,14 @@ class TeacherController extends Controller
             'message' => 'Berhasil menghapus data !',
         ], 200);
     }
+
+    public function homeroomClassId()
+    {
+        $homeroom_class_id = auth()->user()->teacher->homeroom_class ? auth()->user()->teacher->homeroom_class->id : null;
+
+        return response([
+            'message' => 'Berhasil mengambil data !',
+            'homeroom_class_id' => $homeroom_class_id
+        ], 200);
+    }
 }
